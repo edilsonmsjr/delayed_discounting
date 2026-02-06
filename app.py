@@ -16,39 +16,51 @@ st.title("🧠 Laboratório Virtual: Desconto Temporal")
 
 
 
-# --- ETAPA 1: IDENTIFICAÇÃO E TCLE ---
+# --- ETAPA 1: IDENTIFICAÇÃO E TCLE (TERMO DE CONSENTIMENTO) ---
 if st.session_state.etapa == 'identificacao':
-    st.info("### Termo de Consentimento Livre e Esclarecido (TCLE)")
+    st.header("Estudo sobre Processos Decisórios e Percepção Temporal")
     
-    tcle_texto = """
-    Você está sendo convidado(a) a participar da pesquisa sobre Processos Decisórios. 
-    Sua participação consiste em responder a perguntas sobre escolhas financeiras hipotéticas.
+    # Texto do TCLE formatado para leitura clara
+    st.markdown("""
+    ### Termo de Consentimento Livre e Esclarecido (TCLE)
     
-    - **Risco:** Mínimo (pode haver cansaço mental leve).
-    - **Sigilo:** Seus dados serão tratados de forma anônima e utilizados apenas para fins acadêmicos.
-    - **Voluntariedade:** Você pode interromper a participação a qualquer momento sem qualquer penalidade.
+    Olá! Você está sendo convidado(a) a participar de um estudo acadêmico conduzido por pesquisadores do **Instituto de Psicologia da USP (IP-USP)**. 
+    O objetivo desta tarefa é entender como as pessoas avaliam recompensas financeiras em diferentes períodos de tempo.
+
+    **Como funciona?**
+    Você fará uma série de escolhas simples entre duas opções: uma quantia em dinheiro disponível **hoje** ou uma quantia maior disponível no **futuro**. 
+    Não existem respostas certas ou erradas; o que nos interessa é a sua preferência pessoal.
+
+    **Informações Importantes:**
+    1. **Rigor e Sigilo:** Suas respostas são anônimas. Os dados coletados serão utilizados estritamente para fins de análise estatística e pesquisa acadêmica.
+    2. **Participação Voluntária:** Você tem total liberdade para desistir da tarefa a qualquer momento, bastando fechar o navegador.
+    3. **Riscos e Benefícios:** Não há riscos físicos ou financeiros. O benefício é a sua contribuição para o avanço da neurociência comportamental no Brasil.
+    4. **Envio de Dados:** Ao final, o sistema gerará um arquivo com seus resultados. Para colaborar com a pesquisa, pedimos que você envie esse arquivo para o pesquisador responsável.
     
-    Ao marcar a caixa abaixo, você declara ser maior de 18 anos e estar de acordo com a participação.
-    """
-    st.write(tcle_texto)
+    ---
+    """)
     
-    aceite = st.checkbox("Eu li e aceito participar desta pesquisa.")
+    # Caixa de aceite obrigatória
+    aceite = st.checkbox("**Eu li e aceito participar desta pesquisa.**")
     
-    with st.form("form_id"):
-        nome = st.text_input("Insira seu nome ou iniciais para registro:")
+    # Formulário de identificação
+    with st.form("identificacao_participante"):
+        nome = st.text_input("Insira seu nome ou iniciais para registro do arquivo:")
         sexo = st.selectbox("Sexo Biológico:", ["M", "F"])
-        idade = st.number_input("Idade:", min_value=18, max_value=100)
+        idade = st.number_input("Idade:", min_value=18, max_value=100, step=1)
         
-        enviar = st.form_submit_button("Iniciar Experimento")
+        botao_iniciar = st.form_submit_button("Confirmar e Iniciar Experimento")
         
-        if enviar:
+        if botao_iniciar:
             if not aceite:
-                st.error("Para prosseguir, você precisa aceitar o Termo de Consentimento (TCLE).")
+                st.error("⚠️ Para prosseguir, você precisa ler e marcar que aceita o Termo de Consentimento (TCLE).")
             elif not nome:
-                st.warning("Por favor, preencha o campo de identificação.")
+                st.warning("⚠️ Por favor, insira um nome ou iniciais para gerar seu resultado.")
             else:
+                # Se tudo estiver ok, salva na memória e muda a etapa
                 st.session_state.nome = nome
                 st.session_state.sexo = sexo
+                st.session_state.idade = idade
                 st.session_state.etapa = 'experimento'
                 st.rerun()
 
@@ -126,6 +138,7 @@ elif st.session_state.etapa == 'finalizado':
         for key in list(st.session_state.keys()):
             del st.session_state[key]
         st.rerun()
+
 
 
 
