@@ -18,17 +18,17 @@ st.title("🧠 Laboratório Virtual: Desconto Temporal")
 with st.sidebar:
     st.header("Modo Desenvolvedor")
     if st.button("🧪 Pular para o Final (Teste)"):
+        # Criamos dados fictícios E o nome de teste para não dar erro
+        st.session_state.nome = "Desenvolvedor"
         st.session_state.dados_coletados = [
-            {'atraso_dias': 7, 'ponto_indiferenca': 50.0},
-            {'atraso_dias': 30, 'ponto_indiferenca': 40.0},
-            {'atraso_dias': 180, 'ponto_indiferenca': 20.0},
-            {'atraso_dias': 365, 'ponto_indiferenca': 10.0}
+            {'sujeito': 'Desenvolvedor', 'atraso_dias': 7, 'ponto_indiferenca': 50.0},
+            {'sujeito': 'Desenvolvedor', 'atraso_dias': 30, 'ponto_indiferenca': 40.0},
+            {'sujeito': 'Desenvolvedor', 'atraso_dias': 180, 'ponto_indiferenca': 20.0},
+            {'sujeito': 'Desenvolvedor', 'atraso_dias': 365, 'ponto_indiferenca': 10.0}
         ]
         st.session_state.atraso_atual_idx = 4
         st.session_state.etapa = 'finalizado'
         st.rerun()
-    st.write("---")
-    st.caption("Use o botão acima para validar o download sem precisar responder.")
 
 # --- ETAPA 1: IDENTIFICAÇÃO ---
 if st.session_state.etapa == 'identificacao':
@@ -120,3 +120,4 @@ elif st.session_state.etapa == 'finalizado':
         for key in list(st.session_state.keys()):
             del st.session_state[key]
         st.rerun()
+
