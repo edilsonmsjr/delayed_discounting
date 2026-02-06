@@ -24,7 +24,7 @@ if st.session_state.etapa == 'identificacao':
     st.markdown("""
     ### Termo de Consentimento Livre e Esclarecido (TCLE)
     
-    Olá! Você está sendo convidado(a) a participar de um estudo acadêmico conduzido por pesquisadores do **Instituto de Psicologia da USP (IP-USP)**. 
+    Olá! Você está sendo convidado(a) a participar de um estudo acadêmico conduzido por por profissionais da saúde. 
     O objetivo desta tarefa é entender como as pessoas avaliam recompensas financeiras em diferentes períodos de tempo.
 
     **Como funciona?**
@@ -138,6 +138,7 @@ elif st.session_state.etapa == 'finalizado':
         for key in list(st.session_state.keys()):
             del st.session_state[key]
         st.rerun()
+
 
 
 
