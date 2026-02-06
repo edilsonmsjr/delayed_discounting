@@ -16,21 +16,41 @@ st.title("🧠 Laboratório Virtual: Desconto Temporal")
 
 
 
-# --- ETAPA 1: IDENTIFICAÇÃO ---
+# --- ETAPA 1: IDENTIFICAÇÃO E TCLE ---
 if st.session_state.etapa == 'identificacao':
-    st.info("Bem-vindo! Identifique-se para começar.")
+    st.info("### Termo de Consentimento Livre e Esclarecido (TCLE)")
+    
+    tcle_texto = """
+    Você está sendo convidado(a) a participar da pesquisa sobre Processos Decisórios. 
+    Sua participação consiste em responder a perguntas sobre escolhas financeiras hipotéticas.
+    
+    - **Risco:** Mínimo (pode haver cansaço mental leve).
+    - **Sigilo:** Seus dados serão tratados de forma anônima e utilizados apenas para fins acadêmicos.
+    - **Voluntariedade:** Você pode interromper a participação a qualquer momento sem qualquer penalidade.
+    
+    Ao marcar a caixa abaixo, você declara ser maior de 18 anos e estar de acordo com a participação.
+    """
+    st.write(tcle_texto)
+    
+    aceite = st.checkbox("Eu li e aceito participar desta pesquisa.")
+    
     with st.form("form_id"):
-        nome = st.text_input("Nome ou Iniciais:")
-        sexo = st.selectbox("Sexo:", ["M", "F"])
+        nome = st.text_input("Insira seu nome ou iniciais para registro:")
+        sexo = st.selectbox("Sexo Biológico:", ["M", "F"])
         idade = st.number_input("Idade:", min_value=18, max_value=100)
-        if st.form_submit_button("Iniciar Experimento"):
-            if nome:
+        
+        enviar = st.form_submit_button("Iniciar Experimento")
+        
+        if enviar:
+            if not aceite:
+                st.error("Para prosseguir, você precisa aceitar o Termo de Consentimento (TCLE).")
+            elif not nome:
+                st.warning("Por favor, preencha o campo de identificação.")
+            else:
                 st.session_state.nome = nome
                 st.session_state.sexo = sexo
                 st.session_state.etapa = 'experimento'
                 st.rerun()
-            else:
-                st.warning("Por favor, insira um nome ou iniciais.")
 
 # --- ETAPA 2: EXPERIMENTO ---
 elif st.session_state.etapa == 'experimento':
@@ -106,5 +126,6 @@ elif st.session_state.etapa == 'finalizado':
         for key in list(st.session_state.keys()):
             del st.session_state[key]
         st.rerun()
+
 
 
